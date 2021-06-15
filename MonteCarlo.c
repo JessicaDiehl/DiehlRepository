@@ -15,6 +15,7 @@ int main (int argc, char* argv[])
 	int result=0, sum=0;
 	int error;
 	int namelen; 
+	int z;
 	
     double pi=0.0;
 	double x, y;
@@ -52,7 +53,7 @@ int main (int argc, char* argv[])
     
     MPI_Reduce(&result, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);//coloca o valor resultante no ˜buffer do processo especificado para que o resultado seja computado em somente uma variavel.
     
-	MPI_Barrier(MPI_COMM_WORLD); //sincroniza os processos 
+    MPI_Barrier(MPI_COMM_WORLD); //sincroniza os processos 
     
     end = MPI_Wtime(); //termina a contagem do tempo
     
@@ -60,7 +61,7 @@ int main (int argc, char* argv[])
     if (rank==0) //calculo do PI no nó mestre
     {
         pi=4*d*sum; //pi = multiplicação do quadrante calculado por 4
-        printf("np=%2d; Time=%fs; PI=%0.6f\n", size, end-begin, pi); 
+        printf("np=%2d; Time=%fs; PI=%0.6f\n", size, end-start, pi); 
     }
     
     error=MPI_Finalize();
